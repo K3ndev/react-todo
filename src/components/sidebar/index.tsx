@@ -2,16 +2,28 @@ import { FormEvent, useRef } from "react";
 import { useTodoStore } from "../../../store/todoStore";
 
 // type
+type todoListType = {
+  id: number;
+  isChecked: boolean;
+  list: string;
+};
 type categoryType = {
   id: number;
   categoryName: string;
   isUsed: boolean;
-  todoList: [];
+  todoList: todoListType[];
+};
+
+type storeType = {
+  categoryList: categoryType[];
+  addCategory: (argCategory: categoryType) => void;
+  removeCategory: (argId: number) => void;
+  changeIsUsed: (argCategory: categoryType) => void;
 };
 export function Sidebar() {
   // store
   const { categoryList, addCategory, changeIsUsed, removeCategory } =
-    useTodoStore<any>((states: any) => states);
+    useTodoStore<storeType>((states) => states);
 
   // states
   const tempCategory = categoryList;
@@ -35,6 +47,13 @@ export function Sidebar() {
     argInput: string
   ) => {
     event.preventDefault();
+
+    if (inputRef.current) {
+      if (inputRef.current.value === "") {
+        return;
+      }
+    }
+
     if (!checkerCategory(argInput)) {
       const newCategory = {
         id: getUniqueId(),

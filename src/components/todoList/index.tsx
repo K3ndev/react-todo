@@ -14,6 +14,13 @@ type categoryType = {
   isUsed: boolean;
   todoList: todoListType[];
 };
+
+type storeType = {
+  categoryList: categoryType[];
+  addList: (argTodoList: todoListType) => void;
+  removeList: (argTodoList: todoListType) => void;
+  changeIsChecked: (argTodoList: todoListType) => void;
+};
 export function TodoList() {
   // states
   const inputTodoRef = useRef<HTMLInputElement>(null);
@@ -25,7 +32,7 @@ export function TodoList() {
 
   // zustand, global states
   const { categoryList, addList, removeList, changeIsChecked } =
-    useTodoStore<any>((states: any) => states);
+    useTodoStore<storeType>((states) => states);
 
   // return an index, data, and length of the chosen category of the user
   const currentUsed = useMemo(() => {
@@ -45,7 +52,12 @@ export function TodoList() {
     inputValue: string
   ) {
     event.preventDefault();
-    const checkerList = () => {
+    if (inputTodoRef.current) {
+      if (inputTodoRef.current.value === "") {
+        return;
+      }
+    }
+    const checkerList = (): boolean => {
       return currentUsed.reverseList.some((item: todoListType) => {
         return item.list === inputValue;
       });
@@ -54,14 +66,13 @@ export function TodoList() {
     if (!checkerList()) {
       addList({ id: getUniqueId(), isChecked: false, list: inputValue });
     }
-
     if (inputTodoRef.current) {
       inputTodoRef.current.value = "";
     }
   }
 
   // removing a list
-  function removeTodoList(argTodoList: {}) {
+  function removeTodoList(argTodoList: todoListType) {
     removeList(argTodoList);
   }
 

@@ -16,9 +16,16 @@ type categoryType = {
 type storeType = {
   categoryList: categoryType[];
   name: string;
+  addName: (argName: string) => void;
+  addCategory: (argCategory: categoryType) => void;
+  removeCategory: (argId: number) => void;
+  changeIsUsed: (argCategory: categoryType) => void;
+  addList: (argTodoList: todoListType) => void;
+  removeList: (argTodoList: todoListType) => void;
+  changeIsChecked: (argTodoList: todoListType) => void;
 };
 
-export const useTodoStore = create((set) => ({
+export const useTodoStore = create<storeType>((set) => ({
   // states
   categoryList: [
     {
@@ -30,30 +37,23 @@ export const useTodoStore = create((set) => ({
   ],
   name: "Human",
 
-  // functions
-  resetEverything: (newArr: []) => {
-    set((state: { categoryList: [] }) => ({
-      categoryList: newArr,
-    }));
-  },
-
   // refactor...
 
   // name of the user
-  addName: (argName: string) => set(() => ({ name: argName })),
+  addName: (argName) => set(() => ({ name: argName })),
 
   // categoryFn
-  addCategory: (argCategory: categoryType) =>
+  addCategory: (argCategory) =>
     set((state: storeType) => ({
       categoryList: [...state.categoryList, argCategory],
     })),
-  removeCategory: (argId: number) =>
+  removeCategory: (argId) =>
     set((state: storeType) => ({
       categoryList: state.categoryList.filter(
         (item: categoryType) => argId !== item.id
       ),
     })),
-  changeIsUsed: (argCategory: categoryType) =>
+  changeIsUsed: (argCategory) =>
     set((state: storeType) => ({
       categoryList: state.categoryList.map((item: categoryType) => {
         if (argCategory.categoryName === item.categoryName) {
@@ -75,7 +75,7 @@ export const useTodoStore = create((set) => ({
 
   // todoList
   // adding list in the chosen category
-  addList: (argTodoList: todoListType) =>
+  addList: (argTodoList) =>
     set((state: storeType) => ({
       categoryList: state.categoryList.map((item: categoryType) => {
         if (item.isUsed) {
@@ -89,7 +89,7 @@ export const useTodoStore = create((set) => ({
         return item;
       }),
     })),
-  removeList: (argTodoList: todoListType) =>
+  removeList: (argTodoList) =>
     set((state: storeType) => ({
       categoryList: state.categoryList.map((item: categoryType) => {
         if (item.isUsed === true) {
@@ -105,7 +105,7 @@ export const useTodoStore = create((set) => ({
         return item;
       }),
     })),
-  changeIsChecked: (argTodoList: todoListType) =>
+  changeIsChecked: (argTodoList) =>
     set((state: storeType) => ({
       categoryList: state.categoryList.map((item: categoryType) => {
         if (item.isUsed === true) {

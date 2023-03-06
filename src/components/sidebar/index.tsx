@@ -1,5 +1,6 @@
 import { FormEvent, useRef } from "react";
 import { useTodoStore } from "../../../store/todoStore";
+import DOMPurify from "dompurify";
 
 // type
 type todoListType = {
@@ -50,6 +51,10 @@ export function Sidebar() {
 
     if (inputRef.current) {
       if (inputRef.current.value === "") {
+        return;
+      }
+      if (DOMPurify.sanitize(inputRef.current.value) === "") {
+        inputRef.current.value = "";
         return;
       }
     }

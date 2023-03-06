@@ -1,6 +1,7 @@
 import { useRef, useMemo, FormEvent } from "react";
 import { useTodoStore } from "../../../store/todoStore";
 import { DeleteOutlined, CheckOutlined } from "@ant-design/icons";
+import DOMPurify from "dompurify";
 import _ from "lodash";
 // types
 type todoListType = {
@@ -54,6 +55,10 @@ export function TodoList() {
     event.preventDefault();
     if (inputTodoRef.current) {
       if (inputTodoRef.current.value === "") {
+        return;
+      }
+      if (DOMPurify.sanitize(inputTodoRef.current.value) === "") {
+        inputTodoRef.current.value = "";
         return;
       }
     }

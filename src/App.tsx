@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { format } from "date-fns";
-import { Sidebar, TodoList } from "./components/index";
+import { Sidebar, TodoList, ModalLogin } from "./components/index";
 import { useTodoStore } from "../store/todoStore";
 
 type storeType = {
@@ -11,6 +11,7 @@ function App() {
   const { name } = useTodoStore<storeType>((states) => states);
 
   // states
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const date = new Date();
   const day = format(date, "iiii");
   const month = format(date, "MMM");
@@ -26,6 +27,7 @@ function App() {
   const period = periodFN();
   return (
     <>
+      {isModalOpen && <ModalLogin setIsModalOpen={setIsModalOpen} />}
       <main className="relative flex h-screen w-screen gap-7 bg-[#EAEDEE] p-10">
         <Sidebar />
 

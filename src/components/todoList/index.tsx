@@ -111,7 +111,7 @@ export function TodoList() {
       </form>
 
       {/* list */}
-      <div className="scrollbar-hide flex h-[68vh] w-full flex-col gap-3">
+      <div className="scrollbar-hide flex h-[68vh] w-full flex-col gap-3 overflow-auto">
         {/*  */}
         {currentUsed.reverseList?.map((item: todoListType) => {
           return (

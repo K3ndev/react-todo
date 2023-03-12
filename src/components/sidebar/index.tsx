@@ -85,7 +85,7 @@ export function Sidebar() {
   };
   return (
     <aside className="hidden h-[90vh] w-[44%] justify-center rounded-[20px] bg-white p-10 md:w-[34%] lg:inline-flex">
-      <div className="scrollbar-hide h-[82vh] w-full">
+      <div className="scrollbar-hide h-[82vh] w-full overflow-auto">
         <div className="flex flex-col max-w-full gap-4">
           {/* list */}
           {categoryList.map((item: categoryType) => {

@@ -87,7 +87,7 @@ export function ModalLogin(props: ModalLoginType) {
                   <h2 className="mb-2 text-xl font-medium ">
                     What's your name?
                   </h2>
-                  <div className="mb-3">
+                  <div className="mb-7">
                     <input
                       type="text"
                       placeholder="Type it here..."
@@ -119,15 +119,15 @@ export function ModalLogin(props: ModalLoginType) {
                     Continue
                   </button>
                   <button
-                    className="bg-white rounded-lg text-[#008FFD] py-4 px-6 md:py-2 md:px-5 text-sm mb-7 shadow-lg border flex items-center"
+                    className="bg-white rounded-lg text-[#008FFD] py-3 px-6 md:py-2 md:px-5 text-sm mb-7 shadow-lg border flex items-center"
                     onClick={() => {
                       console.log("not yet available");
                     }}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="25"
+                      width="20"
+                      height="20"
                       viewBox="0 0 24 24"
                       className="inline w-4 mr-1"
                     >
@@ -146,30 +146,29 @@ export function ModalLogin(props: ModalLoginType) {
                   </button>
                 </div>
               )}
-
-              <div className="flex justify-center">
-                <svg viewBox="0 0 70 10" width="70">
-                  <circle
-                    cx="5"
-                    cy="5"
-                    r="5"
-                    fill={modalCurrent === 1 ? "#008FFD" : "#d9d9d9"}
-                  ></circle>
-                  <circle
-                    cx="25"
-                    cy="5"
-                    r="5"
-                    fill={modalCurrent === 2 ? "#008FFD" : "#d9d9d9"}
-                  ></circle>
-                  <circle
-                    cx="45"
-                    cy="5"
-                    r="5"
-                    fill={modalCurrent === 3 ? "#008FFD" : "#d9d9d9"}
-                  ></circle>
-                </svg>
-              </div>
             </div>
+          </div>
+          <div className="flex justify-center">
+            <svg viewBox="0 0 70 10" width="70">
+              <circle
+                cx="5"
+                cy="5"
+                r="5"
+                fill={modalCurrent === 1 ? "#008FFD" : "#d9d9d9"}
+              ></circle>
+              <circle
+                cx="25"
+                cy="5"
+                r="5"
+                fill={modalCurrent === 2 ? "#008FFD" : "#d9d9d9"}
+              ></circle>
+              <circle
+                cx="45"
+                cy="5"
+                r="5"
+                fill={modalCurrent === 3 ? "#008FFD" : "#d9d9d9"}
+              ></circle>
+            </svg>
           </div>
         </div>
       </div>

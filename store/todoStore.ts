@@ -1,4 +1,3 @@
-import { useLocalStorage } from "react-use";
 import { create } from "zustand";
 
 // types

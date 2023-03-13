@@ -2,6 +2,8 @@ import DOMPurify from "dompurify";
 import React, { useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useTodoStore } from "../../../store/todoStore";
+import { auth, googleProvider } from "../../config/firebase";
+import { signInWithPopup, signOut } from "firebase/auth";
 
 type ModalLoginType = {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,6 +14,9 @@ type storeType = {
 };
 
 export function ModalLogin(props: ModalLoginType) {
+  // test
+  console.log(auth?.currentUser?.email);
+
   const { addName } = useTodoStore<storeType>((states) => states);
   const { setIsModalOpen } = props;
   const modalParent = document.getElementById("render-modal");
@@ -46,6 +51,22 @@ export function ModalLogin(props: ModalLoginType) {
     if (inputNameRef.current) {
       continueHandler();
       addName(inputNameRef.current.value);
+    }
+  };
+
+  const firebaseHandler = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      // console.log(auth?.currentUser?.displayName);
+      if (auth.currentUser) {
+        addName(auth.currentUser.displayName!.split(" ")[0]);
+      }
+
+      // temp, we just need to get the name of the user
+      await signOut(auth);
+      continueHandler();
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -121,7 +142,7 @@ export function ModalLogin(props: ModalLoginType) {
                   <button
                     className="bg-white rounded-lg text-[#008FFD] py-3 px-6 md:py-2 md:px-5 text-sm mb-7 shadow-lg border flex items-center"
                     onClick={() => {
-                      console.log("not yet available");
+                      firebaseHandler();
                     }}
                   >
                     <svg

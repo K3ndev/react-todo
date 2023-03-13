@@ -49,11 +49,7 @@ function App() {
     return localStorage.getItem("todo-name");
   };
   useEffect(() => {
-    console.log(typeof getLocalData());
-    console.log(getLocalData());
-
     if (getLocalData() !== null) {
-      console.log("there data in localStorage");
       allCategory(JSON.parse(getLocalData()!));
     }
     if (getLocalName() === null) {

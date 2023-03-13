@@ -14,9 +14,6 @@ type storeType = {
 };
 
 export function ModalLogin(props: ModalLoginType) {
-  // test
-  console.log(auth?.currentUser?.email);
-
   const { addName } = useTodoStore<storeType>((states) => states);
   const { setIsModalOpen } = props;
   const modalParent = document.getElementById("render-modal");

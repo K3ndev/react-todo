@@ -1,3 +1,4 @@
+import { useLocalStorage } from "react-use";
 import { create } from "zustand";
 
 // types
@@ -16,6 +17,7 @@ type categoryType = {
 type storeType = {
   categoryList: categoryType[];
   name: string;
+  allCategory: (argTodo: []) => void;
   addName: (argName: string) => void;
   addCategory: (argCategory: categoryType) => void;
   removeCategory: (argId: number) => void;
@@ -25,7 +27,7 @@ type storeType = {
   changeIsChecked: (argTodoList: todoListType) => void;
 };
 
-export const useTodoStore = create<storeType>((set) => ({
+export const useTodoStore = create<storeType>((set, get) => ({
   // states
   categoryList: [
     {
@@ -40,20 +42,32 @@ export const useTodoStore = create<storeType>((set) => ({
   // refactor...
 
   // name of the user
-  addName: (argName) => set(() => ({ name: argName })),
+  addName: (argName) => {
+    set(() => ({ name: argName }));
+    localStorage.setItem("todo-name", JSON.stringify(get().name));
+  },
 
   // categoryFn
-  addCategory: (argCategory) =>
+  allCategory: (argTodo) => {
+    set((state: storeType) => ({
+      categoryList: argTodo,
+    }));
+  },
+  addCategory: (argCategory) => {
     set((state: storeType) => ({
       categoryList: [...state.categoryList, argCategory],
-    })),
-  removeCategory: (argId) =>
+    }));
+    localStorage.setItem("todo-data", JSON.stringify(get().categoryList));
+  },
+  removeCategory: (argId) => {
     set((state: storeType) => ({
       categoryList: state.categoryList.filter(
         (item: categoryType) => argId !== item.id
       ),
-    })),
-  changeIsUsed: (argCategory) =>
+    }));
+    localStorage.setItem("todo-data", JSON.stringify(get().categoryList));
+  },
+  changeIsUsed: (argCategory) => {
     set((state: storeType) => ({
       categoryList: state.categoryList.map((item: categoryType) => {
         if (argCategory.categoryName === item.categoryName) {
@@ -71,11 +85,13 @@ export const useTodoStore = create<storeType>((set) => ({
           todoList: item.todoList,
         };
       }),
-    })),
+    }));
+    localStorage.setItem("todo-data", JSON.stringify(get().categoryList));
+  },
 
   // todoList
   // adding list in the chosen category
-  addList: (argTodoList) =>
+  addList: (argTodoList) => {
     set((state: storeType) => ({
       categoryList: state.categoryList.map((item: categoryType) => {
         if (item.isUsed) {
@@ -88,8 +104,10 @@ export const useTodoStore = create<storeType>((set) => ({
         }
         return item;
       }),
-    })),
-  removeList: (argTodoList) =>
+    }));
+    localStorage.setItem("todo-data", JSON.stringify(get().categoryList));
+  },
+  removeList: (argTodoList) => {
     set((state: storeType) => ({
       categoryList: state.categoryList.map((item: categoryType) => {
         if (item.isUsed === true) {
@@ -104,8 +122,10 @@ export const useTodoStore = create<storeType>((set) => ({
         }
         return item;
       }),
-    })),
-  changeIsChecked: (argTodoList) =>
+    }));
+    localStorage.setItem("todo-data", JSON.stringify(get().categoryList));
+  },
+  changeIsChecked: (argTodoList) => {
     set((state: storeType) => ({
       categoryList: state.categoryList.map((item: categoryType) => {
         if (item.isUsed === true) {
@@ -126,5 +146,7 @@ export const useTodoStore = create<storeType>((set) => ({
         }
         return item;
       }),
-    })),
+    }));
+    localStorage.setItem("todo-data", JSON.stringify(get().categoryList));
+  },
 }));

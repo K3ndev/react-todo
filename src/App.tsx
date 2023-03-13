@@ -1,17 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { Sidebar, TodoList, ModalLogin } from "./components/index";
 import { useTodoStore } from "../store/todoStore";
 
+type todoListType = {
+  id: number;
+  isChecked: boolean;
+  list: string;
+};
+type categoryType = {
+  id: number;
+  categoryName: string;
+  isUsed: boolean;
+  todoList: todoListType[];
+};
 type storeType = {
+  categoryList: categoryType[];
+  addName: (argName: string) => void;
+  allCategory: (argTodo: []) => void;
   name: string;
 };
 function App() {
   // store
-  const { name } = useTodoStore<storeType>((states) => states);
+  const { name, addName, allCategory } = useTodoStore<storeType>(
+    (states) => states
+  );
 
   // states
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const date = new Date();
   const day = format(date, "iiii");
   const month = format(date, "MMM");
@@ -25,6 +41,30 @@ function App() {
     }
   };
   const period = periodFN();
+
+  const getLocalData = () => {
+    return localStorage.getItem("todo-data");
+  };
+  const getLocalName = () => {
+    return localStorage.getItem("todo-name");
+  };
+  useEffect(() => {
+    console.log(typeof getLocalData());
+    console.log(getLocalData());
+
+    if (getLocalData() !== null) {
+      console.log("there data in localStorage");
+      allCategory(JSON.parse(getLocalData()!));
+    }
+    if (getLocalName() === null) {
+      setIsModalOpen(true);
+    }
+
+    if (getLocalName() !== null) {
+      addName(JSON.parse(getLocalName()!));
+    }
+  }, []);
+
   return (
     <>
       {isModalOpen && <ModalLogin setIsModalOpen={setIsModalOpen} />}

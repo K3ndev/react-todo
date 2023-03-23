@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { Sidebar, TodoList, ModalLogin } from "./components/index";
+import { Sidebar, TodoList, ModalLogin } from "./shared/components/index";
 import { useTodoStore } from "./shared/store/todoStore";
 
 type todoListType = {

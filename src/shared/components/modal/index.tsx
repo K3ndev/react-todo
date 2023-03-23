@@ -1,8 +1,8 @@
 import DOMPurify from "dompurify";
 import React, { useState, useRef } from "react";
 import { createPortal } from "react-dom";
-import { useTodoStore } from "../../shared/store/todoStore";
-import { auth, googleProvider } from "../../shared/config/firebase";
+import { useTodoStore } from "../../store/todoStore";
+import { auth, googleProvider } from "../../config/firebase";
 import { signInWithPopup, signOut } from "firebase/auth";
 
 type ModalLoginType = {

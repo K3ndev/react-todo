@@ -1,6 +1,6 @@
 import { FormEvent, useRef } from "react";
 import DOMPurify from "dompurify";
-import { useTodoStore } from "../../shared/store/todoStore";
+import { useTodoStore } from "../../store/todoStore";
 
 // type
 type todoListType = {

@@ -1,5 +1,5 @@
 import { useRef, useMemo, FormEvent } from "react";
-import { useTodoStore } from "../../../store/todoStore";
+import { useTodoStore } from "../../shared/store/todoStore";
 import { DeleteOutlined, CheckOutlined } from "@ant-design/icons";
 import DOMPurify from "dompurify";
 import _ from "lodash";

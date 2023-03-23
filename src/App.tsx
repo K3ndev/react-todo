@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { Sidebar, TodoList, ModalLogin } from "./components/index";
-import { useTodoStore } from "../store/todoStore";
+import { useTodoStore } from "./shared/store/todoStore";
 
 type todoListType = {
   id: number;
@@ -54,6 +54,7 @@ function App() {
     }
     if (getLocalName() === null) {
       setIsModalOpen(true);
+      addName("Human");
     }
 
     if (getLocalName() !== null) {

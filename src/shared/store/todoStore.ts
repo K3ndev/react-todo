@@ -36,7 +36,7 @@ export const useTodoStore = create<storeType>((set, get) => ({
       todoList: [],
     },
   ],
-  name: "Human",
+  name: "",
 
   // refactor...
 
